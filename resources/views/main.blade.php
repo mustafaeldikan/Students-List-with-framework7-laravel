@@ -45,8 +45,8 @@
                                 <td><input type='date' name='birth_date' value='{{ request('birth_date') }}'></td>
                                 <td><button class="button button-fill button-round ,button color-green"
                                         type='submit'>SEARCH</button></td>
-                                <td><button class="button button-fill button-round" type='button' class='add-button'
-                                        onclick='window.location.href=window.location.pathname'>CLEAR</button></td>
+                                        <td><button class="button button-fill button-round ,button color-black" style="color: white" type='button' class='add-button'
+                                            onclick='window.location.href=window.location.pathname'>CLEAR</button></td>
                             </form>
                         </tr>
                         <tr>
