@@ -42,7 +42,7 @@
     <!-- Path to your app js-->
     {{-- <script type="text/javascript" src="path/to/my-app.js"></script> --}}
     <footer>
-        this is footer
+        {{-- this is footer --}}
     </footer>
 </body>
 

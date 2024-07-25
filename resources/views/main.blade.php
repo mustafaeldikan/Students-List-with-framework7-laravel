@@ -10,7 +10,8 @@
 
                 <div class="title">Students List</div>
                 <div class="right">
-                    <button id="theme-toggle" class="button button-fill button-round button color-black">Dark & Light Mode</button>
+                    <button id="theme-toggle" class="button button-fill button-round button color-black">Dark & Light
+                        Mode</button>
                 </div>
 
             </div>
@@ -70,7 +71,7 @@
                                         class="tablo-input"></td>
                                 <td><input type="text" name="surname" placeholder="Enter Last Name"
                                         class="tablo-input"></td>
-                                <td><input type="text" name="birth_place" placeholder="Enter Birthplace"
+                                <td><input type="text" name="birth_place" placeholder="Enter Birth Place"
                                         class="tablo-input"></td>
                                 <td><input type="date" name="birth_date" class="tablo-input"></td>
                                 <td><button class="button button-fill button-round button color-green"
@@ -154,194 +155,127 @@
                 </table>
 
                 <!-- Pagination -->
-                <div style="margin: 0 auto; margin-top: 20px; font-size: larger; width: fit-content;">
-                    <ul class="pagination" style="display: flex; list-style: none; padding: 0; margin: 0;">
-                        @if ($students->onFirstPage())
-                            <li class="page-item disabled" style="margin-right: 10px;"><span class="page-link">
-                                    &lt;&lt; </span></li>
-                        @else
-                            <li class="page-item" style="margin-right: 10px;"><a
-                                    class="item-link item-content external"
-                                    href="{{ $students->url(1) }}&edit_id={{ request('edit_id') }}"> &lt;&lt;
-                                </a></li>
-                        @endif
+                <x-pagination :paginator="$students" />
+            </div>
+        </div>
 
-                        @if ($students->onFirstPage())
-                            <li class="page-item disabled" style="margin-right: 5px;"><span class="page-link">
-                                    &lt; </span></li>
-                        @else
-                            <li class="page-item" style="margin-right: 5px;"><a
-                                    class="item-link item-content external"
-                                    href="{{ $students->previousPageUrl() }}&edit_id={{ request('edit_id') }}">
-                                    &lt; </a></li>
-                        @endif
-
-                        @foreach ($students->links()->elements as $element)
-                            @if (is_string($element))
-                                <li class="page-item disabled" style="margin-right: 5px;"><span
-                                        class="page-link">{{ $element }}</span></li>
-                            @elseif (is_array($element))
-                                @foreach ($element as $page => $url)
-                                    @if ($page == $students->currentPage())
-                                        <li class="page-item active" style="margin-right: 5px;" aria-current="page">
-                                            <span class="page-link">{{ $page }}</span>
-                                        </li>
-                                    @else
-                                        <li class="page-item" style="margin-right: 5px;"><a
-                                                class="item-link item-content external"
-                                                href="{{ $url }}&edit_id={{ request('edit_id') }}">{{ $page }}</a>
-                                        </li>
-                                    @endif
-                                @endforeach
-                            @endif
-                        @endforeach
-
-                        @if ($students->hasMorePages())
-                            <li class="page-item" style="margin-right: 10px;"><a
-                                    class="item-link item-content external"
-                                    href="{{ $students->nextPageUrl() }}&edit_id={{ request('edit_id') }}"> &gt;
-                                </a></li>
-                        @else
-                            <li class="page-item disabled" style="margin-right: 10px;"><span class="page-link">
-                                    &gt;</span></li>
-                        @endif
-
-                        @if ($students->currentPage() == $students->lastPage())
-                            <li class="page-item disabled" style="margin-right: 5px;"><span class="page-link">
-                                    &gt;&gt; </span></li>
-                        @else
-                            <li class="page-item" style="margin-right: 5px;"><a
-                                    class="item-link item-content external"
-                                    href="{{ $students->url($students->lastPage()) }}&edit_id={{ request('edit_id') }}">
-                                    &gt;&gt; </a></li>
-                        @endif
-                    </ul>
-                    </nav>
-
-                </div>
-
-                <script>
-                    document.querySelectorAll('.tablo-input').forEach((input, index, inputs) => {
-                        input.addEventListener('keydown', (event) => {
-                            if (event.key === 'Enter') {
-                                event.preventDefault();
-                                const nextInput = inputs[index + 1];
-                                if (nextInput) {
-                                    nextInput.focus();
-                                }
-                            }
-                        });
-                    });
-
-                    document.addEventListener('DOMContentLoaded', (event) => {
-                        const toggleButton = document.getElementById('theme-toggle');
-                        const currentTheme = localStorage.getItem('theme');
-
-                        if (currentTheme === 'dark') {
-                            document.documentElement.classList.add('dark-mode');
+        <script>
+            document.querySelectorAll('.tablo-input').forEach((input, index, inputs) => {
+                input.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        const nextInput = inputs[index + 1];
+                        if (nextInput) {
+                            nextInput.focus();
                         }
-
-                        toggleButton.addEventListener('click', () => {
-                            document.documentElement.classList.toggle('dark-mode');
-                            let theme = 'light';
-                            if (document.documentElement.classList.contains('dark-mode')) {
-                                theme = 'dark';
-                            }
-                            localStorage.setItem('theme', theme);
-                        });
-                    });
-                </script>
-
-
-                <style>
-                    :root {
-                        --background-color-light: #ffffff;
-                        --text-color-light: #000000;
-                        --button-background-light: #007bff;
-                        --button-text-light: #ffffff;
-                        --navbar-background-light: #f8f9fa;
-                        --card-background-light: #ffffff;
-                        --card-border-light: #e1e1e1;
-
-                        --background-color-dark: #121212;
-                        --text-color-dark: #e0e0e0;
-                        --button-background-dark: #1e88e5;
-                        --button-text-dark: #ffffff;
-                        --navbar-background-dark: #1c1c1c;
-                        --card-background-dark: #1f1f1f;
-                        --card-border-dark: #333333;
-
-                        --background-color: var(--background-color-light);
-                        --text-color: var(--text-color-light);
-                        --button-background: var(--button-background-light);
-                        --button-text: var(--button-text-light);
-                        --navbar-background: var(--navbar-background-light);
-                        --card-background: var(--card-background-light);
-                        --card-border: var(--card-border-light);
                     }
+                });
+            });
 
-                    .dark-mode {
-                        --background-color: var(--background-color-dark);
-                        --text-color: var(--text-color-dark);
-                        --button-background: var(--button-background-dark);
-                        --button-text: var(--button-text-dark);
-                        --navbar-background: var(--navbar-background-dark);
-                        --card-background: var(--card-background-dark);
-                        --card-border: var(--card-border-dark);
+            document.addEventListener('DOMContentLoaded', (event) => {
+                const toggleButton = document.getElementById('theme-toggle');
+                const currentTheme = localStorage.getItem('theme');
+
+                if (currentTheme === 'dark') {
+                    document.documentElement.classList.add('dark-mode');
+                }
+
+                toggleButton.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark-mode');
+                    let theme = 'light';
+                    if (document.documentElement.classList.contains('dark-mode')) {
+                        theme = 'dark';
                     }
-
-                    body {
-                        background-color: var(--background-color);
-                        color: var(--text-color);
-                        font-family: Arial, sans-serif;
-                        transition: background-color 0.3s, color 0.3s;
-                        margin: 0;
-                        padding: 0;
-                    }
-
-                    .navbar {
-                        background-color: var(--navbar-background);
-                        color: var(--text-color);
-                        padding: 15px;
-                        text-align: center;
-                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                    }
-
-                    .card {
-                        background-color: var(--card-background);
-                        border: 1px solid var(--card-border);
-                        border-radius: 8px;
-                        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                        padding: 20px;
-                        margin: 20px;
-                        transition: background-color 0.3s, border-color 0.3s;
-                    }
-
-                    button {
-                        background-color: var(--button-background);
-                        color: var(--button-text);
-                        border: none;
-                        border-radius: 5px;
-                        padding: 10px 20px;
-                        cursor: pointer;
-                        font-size: 16px;
-                        transition: background-color 0.3s, color 0.3s;
-                    }
-
-                    button:hover {
-                        opacity: 0.8;
-                    }
-
-                    .theme-toggle-container {
-                        text-align: center;
-                        margin-top: 20px;
-                    }
+                    localStorage.setItem('theme', theme);
+                });
+            });
+        </script>
 
 
+        <style>
+            :root {
+                --background-color-light: #ffffff;
+                --text-color-light: #000000;
+                --button-background-light: #007bff;
+                --button-text-light: #ffffff;
+                --navbar-background-light: #f8f9fa;
+                --card-background-light: #ffffff;
+                --card-border-light: #e1e1e1;
 
+                --background-color-dark: #121212;
+                --text-color-dark: #e0e0e0;
+                --button-background-dark: #1e88e5;
+                --button-text-dark: #ffffff;
+                --navbar-background-dark: #1c1c1c;
+                --card-background-dark: #1f1f1f;
+                --card-border-dark: #333333;
 
+                --background-color: var(--background-color-light);
+                --text-color: var(--text-color-light);
+                --button-background: var(--button-background-light);
+                --button-text: var(--button-text-light);
+                --navbar-background: var(--navbar-background-light);
+                --card-background: var(--card-background-light);
+                --card-border: var(--card-border-light);
+            }
 
-                </style>
+            .dark-mode {
+                --background-color: var(--background-color-dark);
+                --text-color: var(--text-color-dark);
+                --button-background: var(--button-background-dark);
+                --button-text: var(--button-text-dark);
+                --navbar-background: var(--navbar-background-dark);
+                --card-background: var(--card-background-dark);
+                --card-border: var(--card-border-dark);
+            }
+
+            body {
+                background-color: var(--background-color);
+                color: var(--text-color);
+                font-family: Arial, sans-serif;
+                transition: background-color 0.3s, color 0.3s;
+                margin: 0;
+                padding: 0;
+            }
+
+            .navbar {
+                background-color: var(--navbar-background);
+                color: var(--text-color);
+                padding: 15px;
+                text-align: center;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .card {
+                background-color: var(--card-background);
+                border: 1px solid var(--card-border);
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                margin: 20px;
+                transition: background-color 0.3s, border-color 0.3s;
+            }
+
+            button {
+                background-color: var(--button-background);
+                color: var(--button-text);
+                border: none;
+                border-radius: 5px;
+                padding: 10px 20px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s, color 0.3s;
+            }
+
+            button:hover {
+                opacity: 0.8;
+            }
+
+            .theme-toggle-container {
+                text-align: center;
+                margin-top: 20px;
+            }
+        </style>
 
 
 
