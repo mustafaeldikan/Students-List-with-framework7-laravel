@@ -1,4 +1,3 @@
-
 <div style="margin: 0 auto; margin-top: 20px; font-size: larger; width: fit-content;">
     <ul class="pagination" style="display: flex; list-style: none; padding: 0; margin: 0;">
         @if ($paginator->onFirstPage())

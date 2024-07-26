@@ -13,6 +13,9 @@
     <title>My App</title>
     <!-- Path to Framework7 Library Bundle CSS -->
     <link rel="stylesheet" href="{{ asset('framework7/css/framework7.bundle.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
     <!-- Path to your custom app styles-->
     {{-- <link rel="stylesheet" href="path/to/my-app.css"> --}}
 </head>
@@ -20,8 +23,23 @@
 <body>
     <!-- App root element -->
     <div id="app">
+        <div class="page">
+            <!-- Navbar -->
+            <div class="navbar">
+                <div class="navbar-bg"></div>
+                <div class="navbar-inner">
 
-        {{ $slot }}
+                    <div class="title">Students List</div>
+                    <div class="right">
+                        <button id="theme-toggle" class="button button-fill button-round button color-black">Dark &
+                            Light
+                            Mode</button>
+                    </div>
+
+                </div>
+            </div>
+            {{ $slot }}
+        </div>
     </div>
     <!-- Path to Framework7 Library Bundle JS-->
     <script type="text/javascript" src="{{ asset('framework7/js/framework7.bundle.js') }}"></script>
@@ -37,6 +55,37 @@
             panel: {
                 swipe: 'left',
             }
+        });
+    </script>
+    <script>
+        document.querySelectorAll('.tablo-input').forEach((input, index, inputs) => {
+            input.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    const nextInput = inputs[index + 1];
+                    if (nextInput) {
+                        nextInput.focus();
+                    }
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const toggleButton = document.getElementById('theme-toggle');
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme === 'dark') {
+                document.documentElement.classList.add('theme-dark');
+            }
+
+            toggleButton.addEventListener('click', () => {
+                document.documentElement.classList.toggle('theme-dark');
+                let theme = 'light';
+                if (document.documentElement.classList.contains('theme-dark')) {
+                    theme = 'dark';
+                }
+                localStorage.setItem('theme', theme);
+            });
         });
     </script>
     <!-- Path to your app js-->

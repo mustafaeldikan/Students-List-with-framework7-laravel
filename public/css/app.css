@@ -1,0 +1,25 @@
+
+input:focus-visible {
+    outline: 2px solid rgb(68, 247, 45);
+    border-radius: 4px;
+  }
+
+  select:focus-visible {
+    border: 2px dashed rgb(68, 247, 45);
+    border-radius: 4px;
+    outline: none;
+  }
+
+
+  a {
+    font-weight: normal;
+    transition: filter 0.3s;
+}
+
+a:hover {
+    filter: brightness(95%);
+    font-weight: bold;
+}
+
+
+
